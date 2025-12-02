@@ -26,3 +26,24 @@ def pregunta_04():
      ('12', 3)]
 
     """
+    try:
+        with open("files/input/data.csv", "r", encoding="utf-8") as file:
+            data = file.readlines()
+    except FileNotFoundError:
+        with open("../files/input/data.csv", "r", encoding="utf-8") as file:
+            data = file.readlines()
+
+    conteo_meses = {}
+
+    for line in data:
+        line = line.strip()
+        columns = line.split('\t')
+        fecha = columns[2] 
+        partes_fecha = fecha.split('-')
+        mes = partes_fecha[1]
+        if mes in conteo_meses:
+            conteo_meses[mes] += 1
+        else:
+            conteo_meses[mes] = 1
+
+    return sorted(conteo_meses.items())

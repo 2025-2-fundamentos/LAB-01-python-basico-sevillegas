@@ -15,3 +15,23 @@ def pregunta_03():
     [('A', 53), ('B', 36), ('C', 27), ('D', 31), ('E', 67)]
 
     """
+    try:
+        with open("files/input/data.csv", "r", encoding="utf-8") as file:
+            data = file.readlines()
+    except FileNotFoundError:
+        with open("../files/input/data.csv", "r", encoding="utf-8") as file:
+            data = file.readlines()
+
+    acumulador = {}
+
+    for line in data:
+        line = line.strip()
+        columns = line.split('\t')
+        letra = columns[0]
+        valor = int(columns[1])
+        if letra in acumulador:
+            acumulador[letra] += valor
+        else:
+            acumulador[letra] = valor
+
+    return sorted(acumulador.items())

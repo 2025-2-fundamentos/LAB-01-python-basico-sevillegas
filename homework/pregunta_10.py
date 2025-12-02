@@ -20,3 +20,23 @@ def pregunta_10():
 
 
     """
+    try:
+        with open("files/input/data.csv", "r", encoding="utf-8") as file:
+            data = file.readlines()
+    except FileNotFoundError:
+        with open("../files/input/data.csv", "r", encoding="utf-8") as file:
+            data = file.readlines()
+
+    resultado = []
+
+    for line in data:
+        line = line.strip()
+        columns = line.split('\t')       
+        letra = columns[0]    
+        conteo_col4 = len(columns[3].split(','))
+        
+        conteo_col5 = len(columns[4].split(','))
+        
+        resultado.append((letra, conteo_col4, conteo_col5))
+
+    return resultado

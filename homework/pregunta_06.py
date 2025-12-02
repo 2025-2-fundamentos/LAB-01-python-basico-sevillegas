@@ -26,3 +26,39 @@ def pregunta_06():
      ('jjj', 5, 17)]
 
     """
+
+    try:
+        with open("files/input/data.csv", "r", encoding="utf-8") as file:
+            data = file.readlines()
+    except FileNotFoundError:
+        with open("../files/input/data.csv", "r", encoding="utf-8") as file:
+            data = file.readlines()
+
+    valores_por_clave = {}
+
+    for line in data:
+        line = line.strip()
+        columns = line.split('\t')
+        diccionario_codificado = columns[4] 
+        
+        pares = diccionario_codificado.split(',')
+        
+        for par in pares:
+            clave, valor = par.split(':')
+            valor = int(valor) 
+            
+            if clave in valores_por_clave:
+                valores_por_clave[clave].append(valor)
+            else:
+                valores_por_clave[clave] = [valor]
+
+    resultado = []
+    
+    for clave in sorted(valores_por_clave.keys()):
+        lista_valores = valores_por_clave[clave]
+        min_val = min(lista_valores)
+        max_val = max(lista_valores)
+        
+        resultado.append((clave, min_val, max_val))
+
+    return resultado

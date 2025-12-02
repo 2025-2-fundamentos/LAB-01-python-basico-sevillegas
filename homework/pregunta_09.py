@@ -24,3 +24,27 @@ def pregunta_09():
      'jjj': 18}}
 
     """
+    try:
+        with open("files/input/data.csv", "r", encoding="utf-8") as file:
+            data = file.readlines()
+    except FileNotFoundError:
+        with open("../files/input/data.csv", "r", encoding="utf-8") as file:
+            data = file.readlines()
+
+    conteo = {}
+
+    for line in data:
+        line = line.strip()
+        columns = line.split('\t')        
+        contenido_columna = columns[4]
+        
+        pares = contenido_columna.split(',')
+        for par in pares:
+            clave, valor = par.split(':')
+            
+            if clave in conteo:
+                conteo[clave] += 1
+            else:
+                conteo[clave] = 1
+
+    return dict(sorted(conteo.items()))

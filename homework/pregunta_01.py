@@ -14,3 +14,32 @@ def pregunta_01():
     214
 
     """
+    suma = 0
+    
+    
+    try:
+        with open("files/input/data.csv", "r", encoding="utf-8") as file:
+            data = file.readlines()
+    except FileNotFoundError:
+        with open("../files/input/data.csv", "r", encoding="utf-8") as file:
+            data = file.readlines()
+
+    for line in data:
+
+        line = line.strip()
+        
+        
+        columns = line.split('\t')
+        
+        
+        if len(columns) == 1:
+            columns = line.split(',')
+
+       
+        if len(columns) >= 2:
+            suma += int(columns[1])
+            
+    return suma
+    
+
+    

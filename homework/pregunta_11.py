@@ -16,3 +16,28 @@ def pregunta_11():
 
 
     """
+    try:
+        with open("files/input/data.csv", "r", encoding="utf-8") as file:
+            data = file.readlines()
+    except FileNotFoundError:
+        with open("../files/input/data.csv", "r", encoding="utf-8") as file:
+            data = file.readlines()
+
+    suma_letras = {}
+
+    for line in data:
+        line = line.strip()
+        columns = line.split('\t')
+        
+        valor = int(columns[1])
+        
+
+        letras = columns[3].split(',')
+        
+        for letra in letras:
+            if letra in suma_letras:
+                suma_letras[letra] += valor
+            else:
+                suma_letras[letra] = valor
+
+    return dict(sorted(suma_letras.items()))
